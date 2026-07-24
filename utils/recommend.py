@@ -24,7 +24,7 @@ def recommendation(summery, job_description, skill_match, match_score):
     Based on the information provided, determine whether the candidate should be hired.
 
     Instructions:
-    1. Recommend ONLY one: 'Hire' or 'Reject'
+    1. Recommend ONLY one:  if 70 or above then 'Hire' otherwise 'Reject'
     2. Write exactly 2-3 concise bullet points as justification.
 
     Return ONLY valid JSON.
