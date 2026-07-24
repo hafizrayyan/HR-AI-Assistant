@@ -46,7 +46,7 @@ def skill_match(summery, job_description):
 
     llm = ChatGroq(
         api_key=os.getenv("LLM_API_KEY"),
-        model="llama-3.1-8b-instant"
+        model="qwen/qwen3.6-27b"
     )
 
     System_prompt = System_prompt.partial(
