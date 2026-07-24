@@ -45,7 +45,7 @@ def resume_summery(text):
 
     llm = ChatGroq(
         api_key = os.getenv("LLM_API_KEY"),
-        model = "llama-3.1-8b-instant")
+        model = "qwen/qwen3.6-27b")
 
     summary_prompt = summary_prompt.partial(
     format_instructions=parser.get_format_instructions()
