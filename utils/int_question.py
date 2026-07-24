@@ -39,7 +39,7 @@ def generate_questions(summery, job_description, skill_match, match_score):
 
     llm = ChatGroq(
         api_key=os.getenv("LLM_API_KEY"),
-        model="openai/gpt-120b"
+        model="openai/gpt-oss-120b"
     )
 
     System_prompt = System_prompt.partial(
