@@ -38,7 +38,7 @@ def recommendation(summery, job_description, skill_match, match_score):
 
     llm = ChatGroq(
         api_key=os.getenv("LLM_API_KEY"),
-        model="qwen/qwen3.6-27b"
+        model="llama-3.3-70b-versatile"
     )
 
     System_prompt = System_prompt.partial(
