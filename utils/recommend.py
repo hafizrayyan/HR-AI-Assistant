@@ -38,7 +38,7 @@ def recommendation(summery, job_description, skill_match, match_score):
 
     llm = ChatGroq(
         api_key=os.getenv("LLM_API_KEY"),
-        model="openai/gpt-oss-120b"
+        model="llama-3.1-8b-instant"
     )
 
     System_prompt = System_prompt.partial(
