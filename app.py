@@ -246,53 +246,59 @@ if "candidates" in st.session_state and st.session_state["candidates"]:
     # -------------------------------------------------------
     # NEW DISPLAY SECTION: INTERVIEW QUESTIONS FOR "HIRE"
     # -------------------------------------------------------
-    has_hire_candidates = any(
-    bool(
-        c.get("Questions", {}).get("questions") if isinstance(c.get("Questions"), dict) 
-        else c.get("Questions")
-    ) 
-    for c in st.session_state.get("candidates", [])
-)
+    # -------------------------------------------------------
+    # NEW DISPLAY SECTION: INTERVIEW QUESTIONS FOR "HIRE"
+    # -------------------------------------------------------
+    has_hire_candidates = False
 
-if has_hire_candidates:
-    st.markdown("---")
-    st.subheader("Custom Interview Questions")
+    if "candidates" in st.session_state and st.session_state["candidates"]:
+        has_hire_candidates = any(
+            bool(
+                c.get("Questions", {}).get("questions") if isinstance(c.get("Questions"), dict) 
+                else c.get("Questions")
+            ) 
+            for c in st.session_state["candidates"]
+        )
 
-    for candidate in st.session_state["candidates"]:
-        raw_questions = candidate.get("Questions", {})
-        
-        # Safely extract the list of questions
-        if isinstance(raw_questions, dict):
-            q_list = raw_questions.get("questions", [])
-        elif isinstance(raw_questions, list):
-            q_list = raw_questions
-        else:
-            q_list = []
+    if has_hire_candidates:
+        st.markdown("---")
+        st.subheader("Custom Interview Questions")
 
-        # SKIP candidate completely if they have no questions (e.g., Rejected candidates)
-        if not q_list:
-            continue
+        for candidate in st.session_state["candidates"]:
+            raw_questions = candidate.get("Questions", {})
+            
+            # Safely extract the list of questions
+            if isinstance(raw_questions, dict):
+                q_list = raw_questions.get("questions", [])
+            elif isinstance(raw_questions, list):
+                q_list = raw_questions
+            else:
+                q_list = []
 
-        # Extract Candidate Name safely
-        cand_name = candidate["Candidate"]
-        if isinstance(candidate.get("Summary"), dict):
-            cand_name = candidate["Summary"].get("name", cand_name)
+            # SKIP candidate completely if they have no questions (e.g., Rejected candidates)
+            if not q_list:
+                continue
 
-        # Render expander ONLY for candidates who were recommended for hire
-        with st.expander(f"📌 Interview Questions for **{cand_name}**", expanded=True):
-            for i, q in enumerate(q_list, 1):
-                st.markdown(
-                    f"""
-                    <div style="
-                        background-color: #f8f9fa; 
-                        padding: 12px 16px; 
-                        border-radius: 8px; 
-                        border-left: 4px solid #0d6efd; 
-                        margin-bottom: 10px;
-                        color: #212529;
-                    ">
-                        <strong>Q{i}:</strong> {q}
-                    </div>
-                    """, 
-                    unsafe_allow_html=True
-                )
+            # Extract Candidate Name safely
+            cand_name = candidate["Candidate"]
+            if isinstance(candidate.get("Summary"), dict):
+                cand_name = candidate["Summary"].get("name", cand_name)
+
+            # Render expander ONLY for candidates who were recommended for hire
+            with st.expander(f"📌 Interview Questions for **{cand_name}**", expanded=True):
+                for i, q in enumerate(q_list, 1):
+                    st.markdown(
+                        f"""
+                        <div style="
+                            background-color: #f8f9fa; 
+                            padding: 12px 16px; 
+                            border-radius: 8px; 
+                            border-left: 4px solid #0d6efd; 
+                            margin-bottom: 10px;
+                            color: #212529;
+                        ">
+                            <strong>Q{i}:</strong> {q}
+                        </div>
+                        """, 
+                        unsafe_allow_html=True
+                    )
